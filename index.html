@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poema de Cumpleaños</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        body {
+            font-family: 'Press Start 2P', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .poem-container {
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            color: #00FF00;
+        }
+        p {
+            font-size: 1em;
+            color: white;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .rose {
+            color: #FF69B4;
+            white-space: pre;
+            font-size: 0.5em;
+            line-height: 1.2;
+            margin-top: 30px;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="poem-container">
+        <h1>Happy Birthday</h1>
+        <div id="poem"></div>
+        <pre id="rose" class="rose"></pre>
+    </div>
+    <script>
+        const verses = [
+            "I know you hate your birthday and somehow I am wishing you a happy birthday",
+            "I know you hate to storage physical things, so I created this space in the web for you (kind of hoping you don't hate to storage things virtually)",
+            "I know you hate speaking English, so I decided I will kind of writing this with my broken English as an insult to the English world",
+            "I know you hate unestructured things, so I decided to write a bad poem but with a good programming structure",
+            "YOUR SOUL, THOUGHTS, AND THE THINGS YOU LOVE AND HATE, MAKE YOU THE WONDERFUL PERSON YOU ARE",
+            "HAPPY BIRTHDAY MY DEAR LOVE, MISHA"
+        ];
+
+        const roseAscii = `
+     MMMM
+   MMMMMMMM
+ MMMMMMMMMMMM
+MMMMMMMMMMMMMM
+MMMMMMMMMMMMMM
+ MMMMMMMMMMMM
+   MMMMMMMM
+  MMMMMMMMMM
+ MMMMMMMMMMMM
+MMMMMMMMMMMMMM
+ MMMMMMMMMMMM
+   MMMMMMMM
+     MMMM
+      MM
+       M`;
+
+        let verseCount = parseInt(localStorage.getItem("verseCount")) || 0;
+
+        function showVerses() {
+            const poemDiv = document.getElementById("poem");
+            poemDiv.innerHTML = '';
+
+            for (let i = 0; i < verseCount && i < verses.length; i++) {
+                let p = document.createElement("p");
+                p.textContent = verses[i];
+                poemDiv.appendChild(p);
+                
+                setTimeout(() => {
+                    p.style.opacity = 1;
+                }, 100 * i);
+            }
+
+            if (verseCount > verses.length) {
+                const roseElement = document.getElementById("rose");
+                roseElement.textContent = roseAscii;
+                setTimeout(() => {
+                    roseElement.style.opacity = 1;
+                }, 100 * verses.length);
+            }
+        }
+
+        if (verseCount > 0) {
+            showVerses();
+        }
+
+        verseCount++;
+        if (verseCount > verses.length + 1) {
+            verseCount = 0;
+        }
+        localStorage.setItem("verseCount", verseCount);
+    </script>
+</body>
+</html>
